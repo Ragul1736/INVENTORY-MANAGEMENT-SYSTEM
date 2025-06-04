@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h1 class="text-3xl font-bold mb-4">Inventory Management Dashboard</h1>
+    <p class="text-gray-600 mb-6">Overview of your inventory, suppliers, and orders.</p>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-blue-100 p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-blue-800">Total Products</h2>
+            <p class="text-2xl font-bold">{{ total_products }}</p>
+        </div>
+        <div class="bg-green-100 p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-green-800">Total Suppliers</h2>
+            <p class="text-2xl font-bold">{{ total_suppliers }}</p>
+        </div>
+        <div class="bg-purple-100 p-4 rounded-lg">
+            <h2 class="text-lg font-semibold text-purple-800">Total Orders</h2>
+            <p class="text-2xl font-bold">{{ total_orders }}</p>
+        </div>
+    </div>
+
+    <!-- Low Stock Alerts -->
+    <div class="mb-6">
+        <h2 class="text-xl font-semibold mb-2">Low Stock Alerts</h2>
+        {% if low_stock_products %}
+        <table class="w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="border p-2">ID</th>
+                    <th class="border p-2">Product Name</th>
+                    <th class="border p-2">Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in low_stock_products %}
+                <tr class="bg-red-50">
+                    <td class="border p-2">{{ product.id }}</td>
+                    <td class="border p-2">{{ product.name }}</td>
+                    <td class="border p-2">{{ product.stock }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-gray-600">No products with low stock (less than 10 units).</p>
+        {% endif %}
+    </div>
+
+    <!-- Recent Orders -->
+    <div>
+        <h2 class="text-xl font-semibold mb-2">Recent Orders</h2>
+        {% if recent_orders %}
+        <table class="w-full border-collapse">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="border p-2">Order ID</th>
+                    <th class="border p-2">Product</th>
+                    <th class="border p-2">Quantity</th>
+                    <th class="border p-2">Order Date</th>
+                    <th class="border p-2">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                <tr>
+                    <td class="border p-2">{{ order.id }}</td>
+                    <td class="border p-2">{{ order.name }}</td>
+                    <td class="border p-2">{{ order.quantity }}</td>
+                    <td class="border p-2">{{ order.order_date }}</td>
+                    <td class="border p-2">{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-gray-600">No recent orders found.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h1 class="text-2xl font-bold mb-4">Reports</h1>
+    <h2 class="text-xl font-semibold mb-2">Inventory Levels</h2>
+    <table class="w-full border-collapse mb-6">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border p-2">ID</th>
+                <th class="border p-2">Name</th>
+                <th class="border p-2">Stock</th>
+                <th class="border p-2">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td class="border p-2">{{ product.id }}</td>
+                <td class="border p-2">{{ product.name }}</td>
+                <td class="border p-2">{{ product.stock }}</td>
+                <td class="border p-2">${{ "%.2f" | format(product.price) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h2 class="text-xl font-semibold mb-2">Sales Report</h2>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border p-2">Order ID</th>
+                <th class="border p-2">Product</th>
+                <th class="border p-2">Quantity</th>
+                <th class="border p-2">Total ($)</th>
+                <th class="border p-2">Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td class="border p-2">{{ order.id }}</td>
+                <td class="border p-2">{{ order.name }}</td>
+                <td class="border p-2">{{ order.quantity }}</td>
+                <td class="border p-2">${{ "%.2f" | format(order.quantity * order.price) }}</td>
+                <td class="border p-2">{{ order.order_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

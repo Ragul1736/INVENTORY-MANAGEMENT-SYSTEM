@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Products</h1>
+        <a href="{{ url_for('add_product') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Product</a>
+    </div>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border p-2">ID</th>
+                <th class="border p-2">Name</th>
+                <th class="border p-2">Description</th>
+                <th class="border p-2">Stock</th>
+                <th class="border p-2">Price</th>
+                <th class="border p-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td class="border p-2">{{ product.id }}</td>
+                <td class="border p-2">{{ product.name }}</td>
+                <td class="border p-2">{{ product.description }}</td>
+                <td class="border p-2">{{ product.stock }}</td>
+                <td class="border p-2">${{ "%.2f" | format(product.price) }}</td>
+                <td class="border p-2">
+                    <a href="{{ url_for('edit_product', id=product.id) }}" class="text-blue-600 hover:underline">Edit</a>
+                    <a href="{{ url_for('delete_product', id=product.id) }}" class="text-red-600 hover:underline ml-2" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
